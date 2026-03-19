@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//d/Samik/newShop/ishop-frontend/**)",
+      "Bash(npm install:*)"
+    ]
+  }
+}

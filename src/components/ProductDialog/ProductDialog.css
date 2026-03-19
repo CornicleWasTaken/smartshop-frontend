@@ -1,0 +1,17 @@
+.product-dialog .MuiDialog-paper {
+  min-width: 400px;
+}
+
+.product-dialog .MuiDialogTitle-root {
+  padding: 16px 24px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.product-dialog .MuiDialogContent-root {
+  padding: 16px 24px;
+}
+
+.product-dialog .MuiDialogActions-root {
+  padding: 8px 16px;
+}
