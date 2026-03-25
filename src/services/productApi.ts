@@ -1,4 +1,4 @@
-import type { Product, CreateProductRequest } from '../types/product';
+import type { Product, CreateProductRequest, UpdateProductRequest } from '../types/product';
 
 export class ApiError extends Error {
   status: number;
@@ -42,6 +42,43 @@ export async function createProduct(product: CreateProductRequest): Promise<Prod
       throw new ApiError('Failed to create product', response.status, await response.json());
     }
     return response.json();
+  } catch (error) {
+    if (error instanceof ApiError) {
+      throw error;
+    }
+    throw new ApiError('Network error or server unavailable', 0, error);
+  }
+}
+
+export async function updateProduct(productId: string | number, product: UpdateProductRequest): Promise<Product> {
+  try {
+    const response = await fetch(`/api/products/${productId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(product),
+    });
+    if (!response.ok) {
+      throw new ApiError('Failed to update product', response.status, await response.json());
+    }
+    return response.json();
+  } catch (error) {
+    if (error instanceof ApiError) {
+      throw error;
+    }
+    throw new ApiError('Network error or server unavailable', 0, error);
+  }
+}
+
+export async function deleteProduct(productId: string | number): Promise<void> {
+  try {
+    const response = await fetch(`/api/products/${productId}`, {
+      method: 'DELETE',
+    });
+    if (!response.ok) {
+      throw new ApiError('Failed to delete product', response.status, await response.json());
+    }
   } catch (error) {
     if (error instanceof ApiError) {
       throw error;

@@ -9,13 +9,13 @@
   margin-bottom: 16px;
 }
 
-.create-button {
-  background-color: #1976d2;
-  color: white;
+.create-fab {
+  background-color: #1976d2 !important;
+  color: white !important;
 }
 
-.create-button:hover {
-  background-color: #1565c0;
+.create-fab:hover {
+  background-color: #1565c0 !important;
 }
 
 .loading-container {

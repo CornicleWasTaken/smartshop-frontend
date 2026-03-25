@@ -19,3 +19,12 @@ export interface ProductFormData {
   price: string;
   stockQuantity: string;
 }
+
+export interface UpdateProductRequest {
+  name?: string;
+  sku?: string;
+  price?: number;
+  stockQuantity?: number;
+}
+
+export type ProductDialogMode = 'create' | 'edit';
