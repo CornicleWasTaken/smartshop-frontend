@@ -1,7 +1,7 @@
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import type { ProductFormData } from '../types/product';
+import type { ProductFormData } from '../../types/product';
 
 const productSchema = z.object({
   name: z.string().min(1, 'Name is required'),
@@ -17,7 +17,7 @@ const productSchema = z.object({
   }),
 });
 
-export function useProductForm(onSubmit: (data: ProductFormData) => void) {
+export function useProductForm(onSubmit: (data: ProductFormData) => void, initialValues?: Partial<ProductFormData>) {
   const {
     register,
     handleSubmit,
@@ -25,6 +25,7 @@ export function useProductForm(onSubmit: (data: ProductFormData) => void) {
     reset,
   } = useForm<ProductFormData>({
     resolver: zodResolver(productSchema),
+    defaultValues: initialValues,
   });
 
   const onFormSubmit: SubmitHandler<ProductFormData> = (data) => {

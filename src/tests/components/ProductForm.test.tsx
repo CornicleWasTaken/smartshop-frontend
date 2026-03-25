@@ -2,7 +2,6 @@ import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ProductForm } from '../../components/ProductForm/ProductForm';
-import { ProductFormData } from '../../types/product';
 
 describe('ProductForm', () => {
   const onSubmit = vi.fn();
@@ -41,7 +40,7 @@ describe('ProductForm', () => {
     const createButton = screen.getByText('Create');
     await userEvent.click(createButton);
 
-    expect(screen.getAllByText('is required')).toHaveLength(4);
+    expect(screen.getAllByText(/is required/)).toHaveLength(4);
   });
 
   it('should show error for negative price', async () => {

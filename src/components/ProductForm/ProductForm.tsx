@@ -4,10 +4,12 @@ import './ProductForm.css';
 
 interface ProductFormProps {
   onSubmit: (data: ProductFormData) => void;
+  initialValues?: Partial<ProductFormData>;
+  disabled?: boolean;
 }
 
-export function ProductForm({ onSubmit }: ProductFormProps) {
-  const { register, handleSubmit, errors, reset } = useProductForm(onSubmit);
+export function ProductForm({ onSubmit, initialValues, disabled = false }: ProductFormProps) {
+  const { register, handleSubmit, errors, reset } = useProductForm(onSubmit, initialValues);
 
   const handleReset = () => {
     reset();
@@ -21,6 +23,7 @@ export function ProductForm({ onSubmit }: ProductFormProps) {
           id="name"
           type="text"
           {...register('name')}
+          disabled={disabled}
           className={errors.name ? 'error' : ''}
         />
         {errors.name && <span className="error-message">{errors.name.message}</span>}
@@ -32,6 +35,7 @@ export function ProductForm({ onSubmit }: ProductFormProps) {
           id="sku"
           type="text"
           {...register('sku')}
+          disabled={disabled}
           className={errors.sku ? 'error' : ''}
         />
         {errors.sku && <span className="error-message">{errors.sku.message}</span>}
@@ -44,6 +48,7 @@ export function ProductForm({ onSubmit }: ProductFormProps) {
           type="number"
           step="0.01"
           {...register('price')}
+          disabled={disabled}
           className={errors.price ? 'error' : ''}
         />
         {errors.price && <span className="error-message">{errors.price.message}</span>}
@@ -55,17 +60,18 @@ export function ProductForm({ onSubmit }: ProductFormProps) {
           id="stockQuantity"
           type="number"
           {...register('stockQuantity')}
+          disabled={disabled}
           className={errors.stockQuantity ? 'error' : ''}
         />
         {errors.stockQuantity && <span className="error-message">{errors.stockQuantity.message}</span>}
       </div>
 
       <div className="form-actions">
-        <button type="button" onClick={handleReset} className="btn-secondary">
+        <button type="button" onClick={handleReset} className="btn-secondary" disabled={disabled}>
           Reset
         </button>
-        <button type="submit" className="btn-primary">
-          Create
+        <button type="submit" className="btn-primary" disabled={disabled}>
+          {disabled ? 'Saving...' : (initialValues ? 'Update' : 'Create')}
         </button>
       </div>
     </form>
