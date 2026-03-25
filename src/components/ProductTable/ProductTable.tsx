@@ -61,7 +61,6 @@ export function ProductTable({ products, isLoading, onCreateClick, onEditClick, 
                   backgroundColor: '#2a2a2a'
                 }
               }}>
-              <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>ID</TableCell>
               <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Name</TableCell>
               <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>SKU</TableCell>
               <TableCell sx={{ color: 'white', fontWeight: 'bold' }} align="right">Price</TableCell>
@@ -72,14 +71,13 @@ export function ProductTable({ products, isLoading, onCreateClick, onEditClick, 
           <TableBody>
             {products.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={6} align="center">
+                <TableCell colSpan={5} align="center">
                   No products available
                 </TableCell>
               </TableRow>
             ) : (
               products.map((product) => (
                 <TableRow key={product.productId}>
-                  <TableCell>{product.productId}</TableCell>
                   <TableCell>{product.name}</TableCell>
                   <TableCell>{product.sku}</TableCell>
                   <TableCell align="right">${product.price.toFixed(2)}</TableCell>
