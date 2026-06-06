@@ -1,0 +1,23 @@
+.sales-dialog .MuiDialogTitle-root {
+  background-color: #16171D;
+  color: white;
+}
+
+.sales-dialog .MuiDialogContent-root {
+  background-color: #16171D;
+  color: white;
+  padding: 24px;
+}
+
+.sales-dialog .MuiDialogActions-root {
+  background-color: #16171D;
+  padding: 16px 24px;
+}
+
+.sales-dialog .sale-details-content {
+  min-width: 300px;
+}
+
+.sales-dialog .sale-details-content p {
+  margin-bottom: 12px;
+}

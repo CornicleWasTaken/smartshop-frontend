@@ -1,6 +1,6 @@
+import { TextField, Button, Box, Stack } from '@mui/material';
 import type { ProductFormData } from '../../types/product';
 import { useProductForm } from './useProductForm';
-import './ProductForm.css';
 
 interface ProductFormProps {
   onSubmit: (data: ProductFormData) => void;
@@ -16,64 +16,92 @@ export function ProductForm({ onSubmit, initialValues, disabled = false }: Produ
   };
 
   return (
-    <form onSubmit={handleSubmit} className="product-form">
-      <div className="form-field">
-        <label htmlFor="name">Name</label>
-        <input
+    <Box component="form" onSubmit={handleSubmit} sx={{ minWidth: 300 }}>
+      <Stack spacing={2.5}>
+        <TextField
           id="name"
+          label="Name"
           type="text"
+          fullWidth
+          disabled={disabled}
+          error={!!errors.name}
+          helperText={errors.name?.message}
           {...register('name')}
-          disabled={disabled}
-          className={errors.name ? 'error' : ''}
+          inputProps={{
+            'aria-label': 'Product name',
+          }}
         />
-        {errors.name && <span className="error-message">{errors.name.message}</span>}
-      </div>
 
-      <div className="form-field">
-        <label htmlFor="sku">SKU</label>
-        <input
+        <TextField
           id="sku"
+          label="SKU"
           type="text"
+          fullWidth
+          disabled={disabled}
+          error={!!errors.sku}
+          helperText={errors.sku?.message}
           {...register('sku')}
-          disabled={disabled}
-          className={errors.sku ? 'error' : ''}
+          inputProps={{
+            'aria-label': 'Product SKU',
+          }}
         />
-        {errors.sku && <span className="error-message">{errors.sku.message}</span>}
-      </div>
 
-      <div className="form-field">
-        <label htmlFor="price">Price</label>
-        <input
+        <TextField
           id="price"
+          label="Price"
           type="number"
-          step="0.01"
+          fullWidth
+          disabled={disabled}
+          error={!!errors.price}
+          helperText={errors.price?.message}
           {...register('price')}
-          disabled={disabled}
-          className={errors.price ? 'error' : ''}
+          inputProps={{
+            step: '0.01',
+            'aria-label': 'Product price',
+          }}
         />
-        {errors.price && <span className="error-message">{errors.price.message}</span>}
-      </div>
 
-      <div className="form-field">
-        <label htmlFor="stockQuantity">Stock Quantity</label>
-        <input
+        <TextField
           id="stockQuantity"
+          label="Stock Quantity"
           type="number"
-          {...register('stockQuantity')}
+          fullWidth
           disabled={disabled}
-          className={errors.stockQuantity ? 'error' : ''}
+          error={!!errors.stockQuantity}
+          helperText={errors.stockQuantity?.message}
+          {...register('stockQuantity')}
+          inputProps={{
+            'aria-label': 'Stock quantity',
+          }}
         />
-        {errors.stockQuantity && <span className="error-message">{errors.stockQuantity.message}</span>}
-      </div>
 
-      <div className="form-actions">
-        <button type="button" onClick={handleReset} className="btn-secondary" disabled={disabled}>
-          Reset
-        </button>
-        <button type="submit" className="btn-primary" disabled={disabled}>
-          {disabled ? 'Saving...' : (initialValues ? 'Update' : 'Create')}
-        </button>
-      </div>
-    </form>
+        <Stack direction="row" spacing={1} justifyContent="flex-end" sx={{ mt: 1 }}>
+          <Button
+            type="button"
+            onClick={handleReset}
+            disabled={disabled}
+            variant="outlined"
+            sx={{
+              color: 'text.secondary',
+              borderColor: 'divider',
+              '&:hover': {
+                borderColor: 'text.secondary',
+                backgroundColor: 'action.hover',
+              },
+            }}
+          >
+            Reset
+          </Button>
+          <Button
+            type="submit"
+            disabled={disabled}
+            variant="contained"
+            color="primary"
+          >
+            {disabled ? 'Saving...' : (initialValues ? 'Update' : 'Create')}
+          </Button>
+        </Stack>
+      </Stack>
+    </Box>
   );
 }

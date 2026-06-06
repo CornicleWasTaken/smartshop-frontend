@@ -3,7 +3,6 @@ import { ProductTable } from '../ProductTable/ProductTable';
 import { ProductDialog } from '../ProductDialog/ProductDialog';
 import { DeleteConfirmationDialog } from '../DeleteConfirmationDialog/DeleteConfirmationDialog';
 import { Box, Alert, Typography } from '@mui/material';
-import './ProductManagement.css';
 
 export function ProductManagement() {
   const {
@@ -28,13 +27,32 @@ export function ProductManagement() {
   } = useProductManagement();
 
   return (
-    <Box className="product-management">
-      <Typography variant="h4" gutterBottom>
+    <Box
+      sx={{
+        p: 4,
+        maxWidth: 1200,
+        margin: '0 auto',
+        width: '100%',
+      }}
+    >
+      <Typography
+        variant="h4"
+        gutterBottom
+        sx={{
+          color: 'text.primary',
+          fontWeight: 500,
+          mb: 3,
+        }}
+      >
         Product Management
       </Typography>
 
       {error && (
-        <Alert severity="error" className="error-alert" onClose={() => {}}>
+        <Alert
+          severity="error"
+          sx={{ mb: 2 }}
+          onClose={() => {}}
+        >
           {error}
         </Alert>
       )}
@@ -54,7 +72,7 @@ export function ProductManagement() {
         onClose={handleCloseDialog}
         onSubmit={dialogMode === 'edit' ? handleUpdateProduct : handleCreateProduct}
         mode={dialogMode}
-        product={selectedProduct}
+        product={selectedProduct ?? undefined}
         isSubmitting={isSubmitting}
       />
 

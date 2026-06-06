@@ -1,0 +1,16 @@
+.navigation-bar {
+  background-color: #16171D !important;
+}
+
+.navigation-bar .app-title {
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.navigation-bar .nav-tab {
+  color: white;
+}
+
+.navigation-bar .nav-tab.Mui-selected {
+  color: #90caf9 !important;
+}

@@ -2,7 +2,6 @@ import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/
 import { ProductForm } from '../ProductForm/ProductForm';
 import type { ProductFormData, Product } from '../../types/product';
 import type { ProductDialogMode } from '../../types/product';
-import './ProductDialog.css';
 
 interface ProductDialogProps {
   isOpen: boolean;
@@ -29,13 +28,48 @@ export function ProductDialog({ isOpen, onClose, onSubmit, mode = 'create', prod
   const title = mode === 'edit' ? 'Edit Product' : 'Create New Product';
 
   return (
-    <Dialog open={isOpen} onClose={onClose} className="product-dialog">
-      <DialogTitle>{title}</DialogTitle>
-      <DialogContent>
+    <Dialog
+      open={isOpen}
+      onClose={onClose}
+      maxWidth="sm"
+      fullWidth
+      PaperProps={{
+        sx: {
+          backgroundColor: 'background.paper',
+          boxShadow: 24,
+        },
+      }}
+      sx={{
+        '& .MuiBackdrop-root': {
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          backdropFilter: 'blur(4px)',
+        },
+      }}
+    >
+      <DialogTitle
+        sx={{
+          color: 'text.primary',
+          fontWeight: 600,
+          fontSize: '1.25rem',
+          pb: 1,
+        }}
+      >
+        {title}
+      </DialogTitle>
+      <DialogContent sx={{ pt: 2 }}>
         <ProductForm onSubmit={handleFormSubmit} initialValues={initialValues} disabled={isSubmitting} />
       </DialogContent>
-      <DialogActions>
-        <Button onClick={onClose} color="inherit" disabled={isSubmitting}>
+      <DialogActions sx={{ px: 3, pb: 2 }}>
+        <Button
+          onClick={onClose}
+          disabled={isSubmitting}
+          sx={{
+            color: 'text.secondary',
+            '&:hover': {
+              backgroundColor: 'action.hover',
+            },
+          }}
+        >
           Cancel
         </Button>
       </DialogActions>

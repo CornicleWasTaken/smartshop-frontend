@@ -15,9 +15,18 @@
     "@hookform/resolvers": "^5.2.2",
     "@mui/icons-material": "^7.3.9",
     "@mui/material": "^7.3.9",
+    "@mui/x-date-pickers": "^8.27.2",
+    "d3-format": "^3.1.2",
+    "date-fns": "^4.1.0",
+    "jspdf": "^4.2.1",
+    "jspdf-autotable": "^5.0.7",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-hook-form": "^7.71.2",
+    "react-number-format": "^5.4.5",
+    "react-router-dom": "^7.13.2",
+    "recharts": "^3.8.1",
+    "xlsx": "^0.18.5",
     "zod": "^4.3.6"
   },
   "devDependencies": {

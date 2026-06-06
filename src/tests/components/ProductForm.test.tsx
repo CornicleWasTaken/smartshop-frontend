@@ -1,13 +1,14 @@
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ProductForm } from '../../components/ProductForm/ProductForm';
+import { renderWithTheme } from '../utils/test-utils';
 
 describe('ProductForm', () => {
   const onSubmit = vi.fn();
 
   it('should render all form fields', () => {
-    render(<ProductForm onSubmit={onSubmit} />);
+    renderWithTheme(<ProductForm onSubmit={onSubmit} />);
 
     expect(screen.getByLabelText('Name')).toBeInTheDocument();
     expect(screen.getByLabelText('SKU')).toBeInTheDocument();
@@ -16,7 +17,7 @@ describe('ProductForm', () => {
   });
 
   it('should call onSubmit with valid data', async () => {
-    render(<ProductForm onSubmit={onSubmit} />);
+    renderWithTheme(<ProductForm onSubmit={onSubmit} />);
 
     await userEvent.type(screen.getByLabelText('Name'), 'Test Product');
     await userEvent.type(screen.getByLabelText('SKU'), 'TEST-001');
@@ -35,7 +36,7 @@ describe('ProductForm', () => {
   });
 
   it('should show validation errors for empty fields', async () => {
-    render(<ProductForm onSubmit={onSubmit} />);
+    renderWithTheme(<ProductForm onSubmit={onSubmit} />);
 
     const createButton = screen.getByText('Create');
     await userEvent.click(createButton);
@@ -44,7 +45,7 @@ describe('ProductForm', () => {
   });
 
   it('should show error for negative price', async () => {
-    render(<ProductForm onSubmit={onSubmit} />);
+    renderWithTheme(<ProductForm onSubmit={onSubmit} />);
 
     await userEvent.type(screen.getByLabelText('Name'), 'Test Product');
     await userEvent.type(screen.getByLabelText('SKU'), 'TEST-001');
@@ -58,7 +59,7 @@ describe('ProductForm', () => {
   });
 
   it('should show error for negative stock quantity', async () => {
-    render(<ProductForm onSubmit={onSubmit} />);
+    renderWithTheme(<ProductForm onSubmit={onSubmit} />);
 
     await userEvent.type(screen.getByLabelText('Name'), 'Test Product');
     await userEvent.type(screen.getByLabelText('SKU'), 'TEST-001');
@@ -72,7 +73,7 @@ describe('ProductForm', () => {
   });
 
   it('should call reset when Reset button is clicked', async () => {
-    render(<ProductForm onSubmit={onSubmit} />);
+    renderWithTheme(<ProductForm onSubmit={onSubmit} />);
 
     await userEvent.type(screen.getByLabelText('Name'), 'Test Product');
     await userEvent.type(screen.getByLabelText('SKU'), 'TEST-001');

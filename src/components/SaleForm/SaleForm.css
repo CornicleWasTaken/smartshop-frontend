@@ -1,0 +1,126 @@
+.sale-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 500px;
+}
+
+.sale-form .form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sale-form .form-field label {
+  color: white;
+  font-weight: 500;
+}
+
+.sale-form .items-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sale-form .item-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 12px;
+  background-color: #2a2a2a;
+  border-radius: 8px;
+}
+
+.sale-form .item-fields {
+  display: flex;
+  flex: 1;
+  gap: 16px;
+}
+
+.sale-form .form-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #444;
+}
+
+.sale-form .btn-add-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background-color: transparent;
+  border: 1px solid #555;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.sale-form .btn-add-item:hover:not(:disabled) {
+  background-color: #333;
+}
+
+.sale-form .btn-add-item:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.sale-form .btn-primary {
+  padding: 10px 24px;
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.sale-form .btn-primary:hover:not(:disabled) {
+  background-color: #1565c0;
+}
+
+.sale-form .btn-primary:disabled {
+  background-color: #555;
+  cursor: not-allowed;
+}
+
+/* Autocomplete styling */
+.sale-form .MuiAutocomplete-input {
+  color: #1976d2 !important;
+}
+
+.sale-form .MuiAutocomplete-popper .MuiAutocomplete-option {
+  color: white;
+  background-color: #2a2a2a;
+}
+
+.sale-form .MuiAutocomplete-popper .MuiAutocomplete-option:hover {
+  background-color: #3a3a3a;
+}
+
+.sale-form .MuiAutocomplete-popper .MuiAutocomplete-option[aria-selected="true"] {
+  background-color: #1976d2;
+}
+
+.sale-form .MuiAutocomplete-noOptions {
+  background-color: #2a2a2a;
+  color: white;
+}
+
+/* Handle long product names with ellipsis */
+.sale-form .item-row .MuiAutocomplete-root {
+  min-width: 0;
+}
+
+.sale-form .MuiAutocomplete-inputRoot {
+  max-width: 100%;
+}
+
+.sale-form .MuiAutocomplete-input {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
