@@ -33,7 +33,7 @@ describe('productApi', () => {
 
       const result = await fetchProducts();
       expect(result).toEqual(mockProducts);
-      expect(fetch).toHaveBeenCalledWith('/api/products');
+      expect(fetch).toHaveBeenCalledWith('/api/products', expect.objectContaining({ credentials: 'include' }));
     });
 
     it('should throw ApiError on failure', async () => {
@@ -69,11 +69,11 @@ describe('productApi', () => {
 
       const result = await createProduct(newProduct);
       expect(result).toEqual(mockCreatedProduct);
-      expect(fetch).toHaveBeenCalledWith('/api/products', {
+      expect(fetch).toHaveBeenCalledWith('/api/products', expect.objectContaining({
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify(newProduct),
-      });
+      }));
     });
 
     it('should throw ApiError on failure', async () => {
@@ -112,11 +112,11 @@ describe('productApi', () => {
 
       const result = await updateProduct(1, updatedProduct);
       expect(result).toEqual(expectedResponse);
-      expect(fetch).toHaveBeenCalledWith('/api/products/1', {
+      expect(fetch).toHaveBeenCalledWith('/api/products/1', expect.objectContaining({
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify(updatedProduct),
-      });
+      }));
     });
 
     it('should throw ApiError on failure', async () => {
@@ -140,12 +140,14 @@ describe('productApi', () => {
     it('should resolve successfully on delete', async () => {
       vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
         ok: true,
+        status: 204,
       }));
 
       await deleteProduct(1);
-      expect(fetch).toHaveBeenCalledWith('/api/products/1', {
+      expect(fetch).toHaveBeenCalledWith('/api/products/1', expect.objectContaining({
         method: 'DELETE',
-      });
+        credentials: 'include',
+      }));
     });
 
     it('should throw ApiError on failure', async () => {

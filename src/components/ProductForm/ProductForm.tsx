@@ -75,6 +75,20 @@ export function ProductForm({ onSubmit, initialValues, disabled = false }: Produ
           }}
         />
 
+        <TextField
+          id="category"
+          label="Category (optional)"
+          type="text"
+          fullWidth
+          disabled={disabled}
+          error={!!errors.category}
+          helperText={errors.category?.message}
+          {...register('category')}
+          inputProps={{
+            'aria-label': 'Product category',
+          }}
+        />
+
         <Stack direction="row" spacing={1} justifyContent="flex-end" sx={{ mt: 1 }}>
           <Button
             type="button"

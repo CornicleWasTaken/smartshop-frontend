@@ -17,10 +17,11 @@ export async function fetchProducts(): Promise<Product[]> {
 
 export async function createProduct(product: CreateProductRequest): Promise<Product> {
   try {
-    return requestJson<Product>('/api/products', {
+    const data = await requestJson<Product>('/api/products', {
       method: 'POST',
       body: JSON.stringify(product),
     });
+    return data;
   } catch (error) {
     if (error instanceof ApiError) {
       throw error;
@@ -31,10 +32,11 @@ export async function createProduct(product: CreateProductRequest): Promise<Prod
 
 export async function updateProduct(productId: string | number, product: UpdateProductRequest): Promise<Product> {
   try {
-    return requestJson<Product>(`/api/products/${productId}`, {
+    const data = await requestJson<Product>(`/api/products/${productId}`, {
       method: 'PUT',
       body: JSON.stringify(product),
     });
+    return data;
   } catch (error) {
     if (error instanceof ApiError) {
       throw error;

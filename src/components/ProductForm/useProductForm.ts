@@ -15,6 +15,7 @@ const productSchema = z.object({
   }, {
     message: 'Stock quantity must be a non-negative integer',
   }),
+  category: z.string().max(100, 'Category must be less than 100 characters').optional(),
 });
 
 export function useProductForm(onSubmit: (data: ProductFormData) => void, initialValues?: Partial<ProductFormData>) {

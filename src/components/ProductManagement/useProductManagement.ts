@@ -90,6 +90,7 @@ export function useProductManagement() {
       sku: formData.sku,
       price: parseFloat(formData.price),
       stockQuantity: parseInt(formData.stockQuantity, 10),
+      category: formData.category?.trim() || undefined,
     };
 
     setIsSubmitting(true);
@@ -116,6 +117,7 @@ export function useProductManagement() {
       sku: formData.sku,
       price: parseFloat(formData.price),
       stockQuantity: parseInt(formData.stockQuantity, 10),
+      category: formData.category?.trim() || undefined,
     };
 
     setIsSubmitting(true);

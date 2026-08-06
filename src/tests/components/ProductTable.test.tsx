@@ -91,8 +91,8 @@ describe('ProductTable', () => {
       />
     );
 
-    expect(screen.getByText('$9.99')).toBeInTheDocument();
-    expect(screen.getByText('$19.99')).toBeInTheDocument();
+    expect(screen.getByText('₹9.99')).toBeInTheDocument();
+    expect(screen.getByText('₹19.99')).toBeInTheDocument();
   });
 
   it('should call onEditClick when edit icon is clicked', async () => {

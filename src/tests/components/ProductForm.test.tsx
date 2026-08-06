@@ -32,6 +32,7 @@ describe('ProductForm', () => {
       sku: 'TEST-001',
       price: '9.99',
       stockQuantity: '100',
+      category: '',
     });
   });
 

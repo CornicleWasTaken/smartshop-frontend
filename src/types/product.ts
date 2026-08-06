@@ -4,6 +4,7 @@ export interface Product {
   sku: string;
   price: number;
   stockQuantity: number;
+  category?: string;
 }
 
 export interface CreateProductRequest {
@@ -11,6 +12,7 @@ export interface CreateProductRequest {
   sku: string;
   price: number;
   stockQuantity: number;
+  category?: string;
 }
 
 export interface ProductFormData {
@@ -18,6 +20,7 @@ export interface ProductFormData {
   sku: string;
   price: string;
   stockQuantity: string;
+  category?: string;
 }
 
 export interface UpdateProductRequest {
@@ -25,6 +28,7 @@ export interface UpdateProductRequest {
   sku?: string;
   price?: number;
   stockQuantity?: number;
+  category?: string;
 }
 
 export type ProductDialogMode = 'create' | 'edit';

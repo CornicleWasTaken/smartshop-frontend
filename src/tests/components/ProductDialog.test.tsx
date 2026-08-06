@@ -51,6 +51,7 @@ describe('ProductDialog', () => {
       sku: 'TEST-001',
       price: '9.99',
       stockQuantity: '100',
+      category: '',
     });
   });
 
@@ -140,6 +141,7 @@ describe('ProductDialog', () => {
       sku: 'TEST-001',
       price: '9.99',
       stockQuantity: '100',
+      category: '',
     });
   });
 });

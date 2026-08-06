@@ -23,6 +23,7 @@ export function ProductDialog({ isOpen, onClose, onSubmit, mode = 'create', prod
     sku: product.sku,
     price: product.price.toString(),
     stockQuantity: product.stockQuantity.toString(),
+    category: product.category || '',
   } : undefined;
 
   const title = mode === 'edit' ? 'Edit Product' : 'Create New Product';
