@@ -64,12 +64,12 @@ export function useProductManagement() {
     setProductToDelete(null);
   };
 
-  const handleConfirmDelete = async () => {
+  const handleConfirmDelete = async (authToken?: string | null) => {
     if (!productToDelete) return;
 
     setIsDeleting(true);
     try {
-      await deleteProduct(productToDelete.productId);
+      await deleteProduct(productToDelete.productId, authToken);
       await loadProducts();
       setIsDeleteConfirmOpen(false);
       setProductToDelete(null);

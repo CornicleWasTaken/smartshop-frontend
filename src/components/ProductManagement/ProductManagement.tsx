@@ -2,9 +2,15 @@ import { useProductManagement } from './useProductManagement';
 import { ProductTable } from '../ProductTable/ProductTable';
 import { ProductDialog } from '../ProductDialog/ProductDialog';
 import { DeleteConfirmationDialog } from '../DeleteConfirmationDialog/DeleteConfirmationDialog';
-import { Box, Alert, Typography } from '@mui/material';
+import { Box, Alert, Typography, Button, Stack } from '@mui/material';
+import { useAuth } from '../../auth/AuthContext';
+import { ManagerOverrideDialog } from '../Auth/ManagerOverrideDialog';
+import { useState } from 'react';
 
 export function ProductManagement() {
+  const { role, overrideToken, setOverrideToken, clearOverrideToken } = useAuth();
+  const [isOverrideDialogOpen, setIsOverrideDialogOpen] = useState(false);
+
   const {
     products,
     isLoading,
@@ -26,6 +32,10 @@ export function ProductManagement() {
     handleUpdateProduct,
   } = useProductManagement();
 
+  // Deletion is a guard-eligible action: hidden for cashiers unless they hold an
+  // active (transient) override token. The backend enforces the same rule.
+  const canDelete = role === 'ADMIN' || role === 'MANAGER' || Boolean(overrideToken);
+
   return (
     <Box
       sx={{
@@ -35,17 +45,32 @@ export function ProductManagement() {
         width: '100%',
       }}
     >
-      <Typography
-        variant="h4"
-        gutterBottom
-        sx={{
-          color: 'text.primary',
-          fontWeight: 500,
-          mb: 3,
-        }}
-      >
-        Product Management
-      </Typography>
+      <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 3 }}>
+        <Typography
+          variant="h4"
+          sx={{
+            color: 'text.primary',
+            fontWeight: 500,
+          }}
+        >
+          Product Management
+        </Typography>
+        {role === 'CASHIER' && (
+          overrideToken ? (
+            <Button variant="outlined" color="success" onClick={clearOverrideToken}>
+              Override active
+            </Button>
+          ) : (
+            <Button
+              variant="outlined"
+              onClick={() => setIsOverrideDialogOpen(true)}
+              aria-label="Request manager override"
+            >
+              Request override
+            </Button>
+          )
+        )}
+      </Stack>
 
       {error && (
         <Alert
@@ -65,6 +90,7 @@ export function ProductManagement() {
         onDeleteClick={handleDeleteClick}
         isDeleting={isDeleting}
         deletingProductId={productToDelete?.productId}
+        canDelete={canDelete}
       />
 
       <ProductDialog
@@ -79,9 +105,18 @@ export function ProductManagement() {
       <DeleteConfirmationDialog
         isOpen={isDeleteConfirmOpen}
         onClose={handleCloseDeleteConfirm}
-        onConfirm={handleConfirmDelete}
+        onConfirm={() => handleConfirmDelete(overrideToken)}
         productName={productToDelete?.name || ''}
         isDeleting={isDeleting}
+      />
+
+      <ManagerOverrideDialog
+        isOpen={isOverrideDialogOpen}
+        onClose={() => setIsOverrideDialogOpen(false)}
+        onSuccess={(elevatedToken) => {
+          setOverrideToken(elevatedToken);
+          setIsOverrideDialogOpen(false);
+        }}
       />
     </Box>
   );

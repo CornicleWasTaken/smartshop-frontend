@@ -22,9 +22,14 @@ import { useExpenseManagement } from '../../hooks/useExpenseManagement';
 import { ExpenseForm } from './ExpenseForm';
 import { ExpenseTable } from './ExpenseTable';
 import { DeleteConfirmationDialog } from '../DeleteConfirmationDialog/DeleteConfirmationDialog';
+import { useAuth } from '../../auth/AuthContext';
 import type { ExpenseData, ExpenseCreateRequest, ExpenseUpdateRequest } from '../../types/financial';
 
 export const ExpenseManagementContainer: React.FC = () => {
+  const { role } = useAuth();
+  // Deleting expenses is guard-eligible; cashiers get no delete affordance.
+  // (The table already hides the delete button when onDelete is undefined.)
+  const canManage = role === 'ADMIN' || role === 'MANAGER';
   const {
     expenses,
     categories,
@@ -147,7 +152,7 @@ export const ExpenseManagementContainer: React.FC = () => {
         expenses={expenses}
         loading={loading}
         onEdit={handleEditExpense}
-        onDelete={handleDeleteExpense}
+        onDelete={canManage ? handleDeleteExpense : undefined}
         onPageChange={(page) => loadExpenses({ page })}
         onRowsPerPageChange={(size) => loadExpenses({ size })}
       />

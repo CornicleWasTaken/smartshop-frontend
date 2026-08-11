@@ -66,6 +66,7 @@ export async function requestJson<T>(
   options: RequestInit = {},
   includeAuth = true,
   retryOnUnauthorized = true,
+  authToken?: string | null,
 ): Promise<T> {
   const headers = new Headers(options.headers);
 
@@ -74,7 +75,9 @@ export async function requestJson<T>(
   }
 
   if (includeAuth) {
-    const token = getStoredAuthToken();
+    // An explicitly supplied token (e.g. a manager-override token) takes
+    // precedence over the stored access token. It is never persisted here.
+    const token = authToken ?? getStoredAuthToken();
     if (token) {
       headers.set('Authorization', `Bearer ${token}`);
     }
@@ -87,10 +90,12 @@ export async function requestJson<T>(
   });
 
   if (!response.ok) {
+    // Elevated-token calls should not refresh: the override is transient and
+    // refreshing would silently downgrade the request to the caller's own role.
     if (response.status === 401 && includeAuth && retryOnUnauthorized) {
       const refreshed = await refreshAccessToken();
       if (refreshed) {
-        return requestJson<T>(url, options, includeAuth, false);
+        return requestJson<T>(url, options, includeAuth, false, authToken);
       }
     }
 

@@ -10,6 +10,7 @@ import { ProductManagement } from './components/ProductManagement';
 import { SalesManagement } from './components/SalesManagement';
 import { FinancialDashboard } from './components/Dashboard/FinancialDashboard';
 import { ExpenseManagementContainer } from './components/Expenses/ExpenseManagementContainer';
+import { UsersPage } from './components/Users/UsersPage';
 
 function AppShell() {
   const location = useLocation();
@@ -27,6 +28,9 @@ function AppShell() {
           <Route path="/financial" element={<FinancialDashboard />} />
           <Route path="/reports" element={<ReportsPage />} />
           <Route path="/financial/expenses" element={<ExpenseManagementContainer />} />
+        </Route>
+        <Route element={<ProtectedRoute requiredRole="ADMIN" />}>
+          <Route path="/users" element={<UsersPage />} />
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

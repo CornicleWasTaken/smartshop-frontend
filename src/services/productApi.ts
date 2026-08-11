@@ -45,11 +45,23 @@ export async function updateProduct(productId: string | number, product: UpdateP
   }
 }
 
-export async function deleteProduct(productId: string | number): Promise<void> {
+/**
+ * Deletes a product. Pass {@link authToken} (a transient manager-override token)
+ * to authorize the call with the OVERRIDE authority; elevated calls never fall
+ * back to the 401→refresh path.
+ */
+export async function deleteProduct(
+  productId: string | number,
+  authToken?: string | null,
+): Promise<void> {
   try {
-    await requestJson<void>(`/api/products/${productId}`, {
-      method: 'DELETE',
-    });
+    await requestJson<void>(
+      `/api/products/${productId}`,
+      { method: 'DELETE' },
+      true,
+      authToken ? false : true,
+      authToken,
+    );
   } catch (error) {
     if (error instanceof ApiError) {
       throw error;

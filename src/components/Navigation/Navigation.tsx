@@ -4,12 +4,13 @@ import { useAuth } from '../../auth/AuthContext';
 
 export function Navigation() {
   const location = useLocation();
-  const { user, logout } = useAuth();
+  const { user, role, logout } = useAuth();
 
   const getTabValue = () => {
     if (location.pathname === '/sales') return 'sales';
     if (location.pathname.startsWith('/financial')) return 'financial';
     if (location.pathname.startsWith('/reports')) return 'reports';
+    if (location.pathname === '/users') return 'users';
     return 'products';
   };
 
@@ -76,9 +77,29 @@ export function Navigation() {
               component={Link}
               to="/reports"
             />
+          {role === 'ADMIN' && (
+            <Tab
+              label="Users"
+              value="users"
+              component={Link}
+              to="/users"
+            />
+          )}
         </Tabs>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-          {user && <Chip size="small" label={user.username} />}
+          {user && (
+            <>
+              <Chip size="small" label={user.username} />
+              {role && (
+                <Chip
+                  size="small"
+                  label={role}
+                  color={role === 'ADMIN' ? 'error' : role === 'MANAGER' ? 'primary' : 'default'}
+                  variant="outlined"
+                />
+              )}
+            </>
+          )}
           <Button variant="outlined" onClick={logout} sx={{ whiteSpace: 'nowrap' }}>
             Logout
           </Button>

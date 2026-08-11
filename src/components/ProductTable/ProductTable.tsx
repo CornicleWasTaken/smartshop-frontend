@@ -25,9 +25,11 @@ interface ProductTableProps {
   onDeleteClick: (product: Product) => void;
   isDeleting?: boolean;
   deletingProductId?: string | number;
+  /** When false the delete button is hidden (cashiers). Defaults to true. */
+  canDelete?: boolean;
 }
 
-export function ProductTable({ products, isLoading, onCreateClick, onEditClick, onDeleteClick, isDeleting = false, deletingProductId }: ProductTableProps) {
+export function ProductTable({ products, isLoading, onCreateClick, onEditClick, onDeleteClick, isDeleting = false, deletingProductId, canDelete = true }: ProductTableProps) {
   if (isLoading) {
     return (
       <Box
@@ -139,23 +141,25 @@ export function ProductTable({ products, isLoading, onCreateClick, onEditClick, 
                     >
                       <EditIcon />
                     </IconButton>
-                    <IconButton
-                      onClick={() => onDeleteClick(product)}
-                      aria-label="Delete product"
-                      sx={{
-                        color: 'error.main',
-                        '&:hover': {
-                          backgroundColor: 'action.hover',
-                        },
-                      }}
-                      disabled={isDeleting && deletingProductId === product.productId}
-                    >
-                      {isDeleting && deletingProductId === product.productId ? (
-                        <CircularProgress size={24} color="inherit" />
-                      ) : (
-                        <DeleteIcon />
-                      )}
-                    </IconButton>
+                    {canDelete && (
+                      <IconButton
+                        onClick={() => onDeleteClick(product)}
+                        aria-label="Delete product"
+                        sx={{
+                          color: 'error.main',
+                          '&:hover': {
+                            backgroundColor: 'action.hover',
+                          },
+                        }}
+                        disabled={isDeleting && deletingProductId === product.productId}
+                      >
+                        {isDeleting && deletingProductId === product.productId ? (
+                          <CircularProgress size={24} color="inherit" />
+                        ) : (
+                          <DeleteIcon />
+                        )}
+                      </IconButton>
+                    )}
                   </TableCell>
                 </TableRow>
               ))
